@@ -32,15 +32,22 @@
             return false;
         }
     };
-    function validateEmail(a)
+    function validateEmail(email)
     {
         var re=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/;
-        if (a == '' || !re.test(a))
+        if (email == '' || !re.test(email))
         {
             return false;
         }
         else 
             return true;
+    };
+    function isEmail(email)
+    {
+      const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+      if (email.match(regEx)) return true;
+      else return false;
     };
     function validatePassword(a)
     {
@@ -279,6 +286,23 @@
        return result;
     };
 
+
+    function isEmpty(string)
+    {
+        if (string.trim() === "") return true;
+        else return false;
+    };
+
+    function isEmptyArray(array)
+    {
+      if (array.length === 0) return true;
+      else return false;
+    };
+
+
+
+
 module.exports = {
-  isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweennew ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptresponse,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString
+  isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweennew ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptresponse,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString,
+  isEmail,isEmpty,isEmptyArray
 }

@@ -14,5 +14,4 @@ Let's see about js code:
     let jsutil = require('nodejs-coreutils');
     console.log(jsutil.removeexponentials(1.2345e5));
 
-    let jsutil = require('nodejs-coreutils');
     console.log(jsutil.removeexponentials(1.2345e5));

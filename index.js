@@ -249,7 +249,7 @@
             number = removeexponentials(number);
             return (number + "").substring(0, 4) + "..." + (number + "").substring((number + "").length - 3);
         }
-    },
+    };
 
     function removeexponentials(n) {
         var sign = +n < 0 ? "-" : "",
@@ -264,7 +264,7 @@
         return +pow < 0
             ? sign + "0." + "0".repeat(Math.max(Math.abs(pow) - 1 || 0, 0)) + lead + decimal
             : sign + lead + (+pow >= decimal.length ? (decimal + "0".repeat(Math.max(+pow - decimal.length || 0, 0))) : (decimal.slice(0, +pow) + "." + decimal.slice(+pow)))
-    },
+    };
     function truncateToDecimals(num, dec = 0) {
         num=removeexponentials(num);
         const totalDecimal = countDecimals(num);
@@ -276,11 +276,11 @@
         }
         const calcDec = Math.pow(10, dec);
         return Math.trunc(num * calcDec) / calcDec;
-    },
+    };
     function countDecimals(value) {
         if (Math.floor(value) === value) return 0;
         return value.toString().split(".")[1].length || 0;
-    },
+    };
     function generateRandomString(length) {
         var result           = '';
         var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%:;.,';
@@ -289,7 +289,7 @@
           result += characters.charAt(Math.floor(Math.random() * charactersLength));
        }
        return result;
-    }
+    };
 
 module.exports = {
   isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweennew ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptresponse,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString

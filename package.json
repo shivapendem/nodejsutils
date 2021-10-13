@@ -1,6 +1,6 @@
 {
   "name": "nodejs-coreutils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "nodejsutils for node usage",
   "main": "index.js",
   "scripts": {

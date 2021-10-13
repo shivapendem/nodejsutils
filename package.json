@@ -1,0 +1,40 @@
+{
+  "name": "nodejs-coreutils",
+  "version": "0.0.2",
+  "description": "nodejsutils for node usage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivapendem/nodejsutils.git"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "csurf": "^1.11.0",
+    "decimal.js": "^3.0.0",
+    "eslint": "^4.19.1",
+    "hashids": "^0.3.3",
+    "md5": "^2.2.1",
+    "speakeasy": "^2.0.0",
+    "string-strip-html": "^5.0.1"
+  },
+  "keywords": [
+    "nodejsutils",
+    "node",
+    "utils",
+    "utils"
+  ],
+  "author": "shivapendem",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shivapendem/nodejsutils/issues"
+  },
+  "homepage": "https://github.com/shivapendem/nodejsutils#readme"
+}

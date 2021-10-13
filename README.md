@@ -1,8 +1,8 @@
 ## Description
     npm package for simple addons to node library.
 ## Installation
-    `npm i nodejsutils --save`
+    `npm i nodejs-coreutils --save`
     ```
-    import {nodejsutils} from 'nodejsutils';
+    import {nodejs-coreutils} from 'nodejs-coreutils';
     
     ```

@@ -9,7 +9,6 @@
     };
     function maskcode(data,limiter)
     {
-        //mask("shiva@yopmail.com","X");
         var _email=data.split("");
         for(var loopvar=3;loopvar<_email.length-4;loopvar++)
         {
@@ -33,7 +32,6 @@
             return false;
         }
     };
-       
     function validateEmail(a)
     {
         var re=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,8})+$/;
@@ -76,11 +74,10 @@
         var domain = a.replace(/.*@/, "");
         return domain;
     };
-    function containsspecialcharacters(data)
+    function containsspecialcharacters(data,_array=["%","*","?","[","]","!","#","^"," ","|","&","**","/*","*/","+","=","-->","\'","\"","sleep",",,,",")))"])
     {
         if(data == null)
             return true;
-        var _array=getlistofexceptioncharactersname();
         for(_loopvar=0;_loopvar<_array.length;_loopvar++)
         {
             if((data+"").toLowerCase().indexOf(_array[_loopvar].toLowerCase())>=0)
@@ -88,23 +85,22 @@
         }
         return true;
     };
-    function generatehash (a) {
+    function generatehash(a) {
         var hash = crypto.createHash('sha1');
         data = hash.update(a, 'utf-8');
         gen_hash= data.digest('hex');
         return gen_hash;
     };
     function randomIntFromInterval (min,max) {
-        return Math.floor(Math.random()*(max-min+1)+min);
+        return getvaluebetweennew(min,max,0);
     };
     function getvaluebetweennew (min,max,decimal) {
         var precision=1;
         for(var i=0;i<decimal;i++)
             precision=precision*10;
-
         return Math.floor(Math.random()*((max*precision)-(min+1)*precision)+min*precision)/precision;
     };
-    function urlencodestring (query) {
+    function urlencodestring(query) {
         return encodeURIComponent(query).replace(/'/g,"%27").replace(/"/g,"%22")
     };
     function generateGauthkey (userinfo) {
@@ -119,8 +115,8 @@
         var urlencoded = urlencodestring(text);
         return 'https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl='+urlencoded+'';
     };
-    function validatemobileotp (key,password) {
-        var tokenValidates = speakeasy.totp.verify({secret: key,encoding: 'base32',token: password,window: 4});
+    function validatemobileotp (key,password,delay) {
+        var tokenValidates = speakeasy.totp.verify({secret: key,encoding: 'base32',token: password,window: delay});
         var delta=-1;
         if(tokenValidates==true)
           delta=1;
@@ -160,11 +156,9 @@
       }
       else if(type == 'object')
       {
-        //console.log(data);
         for(var key in data) {
             var value = MystripFunction(data[key]);
             data[key]=value;
-            //console.log(key+"  "+value);
         }
         return data;
       }
@@ -172,7 +166,6 @@
       {
         console.error("MystripFunction "+type);
         console.error(data);
-        // return stripHtml(data.toString()).result;
         return data;
       }     
     }
@@ -186,16 +179,12 @@
             return MystripFunction(str.replace(/<\/?[^>]+>/gi, ''));
         }
     };
-    function customencrypt(str) {
-        var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
-        var key = 'z1x2c3v4';
+    function customencrypt(str,algorithm='aes256',key='shivapendem') {
         var cipher = crypto.createCipher(algorithm, key);  
         var encrypted = cipher.update(str+"", 'utf8', 'hex') + cipher.final('hex');
         return encrypted;
     };
-    function customdecrypt(str) {
-        var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
-        var key = 'z1x2c3v4';
+    function customdecrypt(str,algorithm='aes256',key='shivapendem') {
         try
         {
             var decipher = crypto.createDecipher(algorithm, key);
@@ -217,7 +206,6 @@
         return true;
     }
     function encryptresponse(str_golb) {
-        //let unescapeStr = querystring.unescape(str);
         if(isJson(str_golb))
         {
             try

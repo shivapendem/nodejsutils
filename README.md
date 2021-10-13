@@ -6,3 +6,13 @@
     import {nodejs-coreutils} from 'nodejs-coreutils';
     
     ```
+
+
+## How to use
+Let's see about js code:
+```js
+    let jsutil = require('nodejs-coreutils');
+    console.log(jsutil.removeexponentials(1.2345e5));
+
+    let jsutil = require('nodejs-coreutils');
+    console.log(jsutil.removeexponentials(1.2345e5));

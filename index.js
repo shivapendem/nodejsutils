@@ -20,7 +20,7 @@
     };
     function searcharray(master,position,value)
     {
-        if((master==null) || (position==null) || (value==null))
+        if((isNull(master)) || (isNull(position)) || (isNull(value)))
             return false;
         else
         {
@@ -83,7 +83,7 @@
     };
     function containsspecialcharacters(data,_array=["%","*","?","[","]","!","#","^"," ","|","&","**","/*","*/","+","=","-->","\'","\"","sleep",",,,",")))"])
     {
-        if(data == null)
+        if(isNull(data))
             return true;
         for(_loopvar=0;_loopvar<_array.length;_loopvar++)
         {
@@ -137,7 +137,7 @@
     {
       var type = typeof data;
       //console.log(type);
-      if(data == null)
+      if(isNull(data))
       {
         return data;
       }
@@ -178,7 +178,7 @@
     }
 
     function strip_tags(str) {
-        if(str == null)
+        if(isNull(str))
             return str;
         else
         {
@@ -276,9 +276,9 @@
         if (Math.floor(value) === value) return 0;
         return value.toString().split(".")[1].length || 0;
     };
-    function generateRandomString(length) {
+    function generateRandomString(length,characters='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%:;.,') {
         var result           = '';
-        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%:;.,';
+        //var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%:;.,';
         var charactersLength = characters.length;
         for ( var i = 0; i < length; i++ ) {
           result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -299,10 +299,53 @@
       else return false;
     };
 
+    function isValidHttpUrl(string) {
+      let url;
+      try {
+        url = new URL(string);
+      } catch (_) {
+        return false;  
+      }
+      return url.protocol === "http:" || url.protocol === "https:";
+    }
+    function trimtext(text,length=12)
+    {
+        if(isNull(text))
+            return text;
+        else if(text.length>length)
+            return text.substring(0,length)+"...";
+        else
+            return text; 
+    }
 
+    function isNull(data)
+    {
+        if( (variable === null) || (typeof data === 'undefined') )
+        { 
+            return true;
+        }
+        return false;
+    }
+    function getMD5(data)
+    {
+        if(isJson(data))
+            return Md5.hashStr(JSON.stringify(string));
+        else
+            return Md5.hashStr(string);
+    }
+    function getCurrentTimeinMilliSeconds()
+    {
+       return new Date().getTime();
+    }
+    function replaceAll(textstring,from,to)
+    {
+        if(isNull(textstring) || isEmpty(textstring))
+            return textstring
+        return textstring.split(from).join(to);
+    }
 
 
 module.exports = {
   isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweennew ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptresponse,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString,
-  isEmail,isEmpty,isEmptyArray
+  isEmail,isEmpty,isEmptyArray,isValidHttpUrl,trimtext,isNull,getMD5,getCurrentTimeinMilliSeconds,replaceAll
 }

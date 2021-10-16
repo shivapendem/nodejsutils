@@ -14,4 +14,4 @@ Let's see about js code:
     let jsutil = require('nodejs-coreutils');
     console.log(jsutil.removeexponentials(1.2345e5));
 
-    console.log(jsutil.removeexponentials(1.2345e5));
+    console.log(jsutil.toTitleCase("npm package for simple addons to node library."));

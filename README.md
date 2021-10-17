@@ -63,6 +63,8 @@ Let's see about js code:
         //f71435280b296e1f26fe8147c34a4098ef2e2c1498a3b7482e9afc6f9b972d417a692e3c66710a982de77c6ede3da1c8e73b4637594cee19620e1b5f77f20b46
     console.log(jsutil.MystripFunction("<a href=''>Sample</a>"));   
         //Sample
+    console.log(jsutil.stripHTMLTags("<a href=''>Sample</a>"));   
+        //Sample
     console.log(jsutil.strip_tags("Sample 123<div> divcontent</div>"));
         //Sample 123 divcontent
     console.log(jsutil.customencrypt("sample"));

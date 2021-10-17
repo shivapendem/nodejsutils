@@ -343,9 +343,242 @@
             return textstring
         return textstring.split(from).join(to);
     }
+    ///////
+
+    function trim(value) {
+        return value.toString().replace(/^\s+|\s+$/g, '');
+    }
+
+    function toNumber(value) {
+        return Number(value);
+    };
+
+    function toBoolean(value) {
+        return value.toString().toLowerCase() == "true" && value != "0";
+    };
+
+    function isNumeric(precision) {
+        return new RegExp("^-?((\\d{1," + (precision ? precision.length - precision.scale : "") + "}((\\.\\d{0," + (precision ? precision.scale : "") + "})?)))$").test(this);
+    };
+
+    function isInteger(value) {
+        return /^[0-9]{1,}$/.test(value);
+    }
+
+    function endsWith(value, ends, ignoreCase) {
+        if (ignoreCase) {
+            return value.toLowerCase().charAt(value.length - str.length) == str.toLowerCase();
+        }
+        return value.charAt(value.length - str.length) == str;  
+    };
+
+    function startsWith(value, stats, ignoreCase) {
+        if (ignoreCase) {
+            return value.toLowerCase().charAt(0) == str.toLowerCase();
+        }
+        return value.charAt(0) == str;
+    };
+
+    function uniquefromarray(origArr) {
+        var newArr = [],
+            origLen = origArr.length,
+            found,
+            x, y;
+             
+        for ( x = 0; x < origLen; x++ ) {
+            found = undefined;
+            for ( y = 0; y < newArr.length; y++ ) {
+                if ( origArr[x] === newArr[y] ) {
+                  found = true;
+                  break;
+                }
+            }
+            if ( !found) newArr.push( origArr[x] );   
+        }
+       return newArr;
+    };
+    function randomBoolean () {
+        return Math.random() >= 0.5;
+    };
+    function isObjectEmpty(obj)
+    {
+        return (Object.keys(obj).length === 0);
+    }
+    function reversestring(string)
+    {
+        return string.split("").reverse().join('');
+    }
+    function randomHexColor()
+    {
+        let n= (Math.random() *0xFFFFFF*1000000).toString(16);
+        return "#"+n;
+    }
+    function numberofoccurrences(array)
+    {
+        if(!isArray(array))
+        {
+            return [];
+        }
+        else
+        {
+            array.reduce(function (acc, curr) {
+              return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+            }, {});
+        }
+    }
+    function numbertoStringWithComma(number)
+    {
+        if(!isNumeric(number))
+        {
+            return number;
+        }
+        else
+        {
+            let str=String(number);
+            let s='';
+            let count=0;
+            for(let _loopvar=str.length-1;_loopvar>0;_loopvar--)
+            {
+                s=str[_loopvar]+s;
+                count++;
+                if((count%3==0) && (i!=0) )
+                {
+                    s=','+s;
+                }
+            }
+            return s;
+        }
+    }
+    function removeEmptyStringinArray(array)
+    {
+        if(!isArray(array))
+        {
+            return array;
+        }
+        else
+        {
+            let resultarray=[];
+            for(let _loopvar=0;_loopvar < array.length;_loopvar++)
+            {
+                if(!isEmpty(array[_loopvar]))
+                {
+                    resultarray.push(array[_loopvar]);
+                }
+            }
+            return resultarray;
+        }
+    }
+    function replaceEmptyStringtoNullinArray(array)
+    {
+        if(!isArray(array))
+        {
+            return array;
+        }
+        else
+        {
+            let resultarray=[];
+            for(let _loopvar=0;_loopvar < array.length;_loopvar++)
+            {
+                if(!isEmpty(array[_loopvar]))
+                {
+                    resultarray.push(array[_loopvar]);
+                }
+                else
+                {
+                    resultarray.push(null);
+                }
+            }
+            return resultarray;
+        }
+    }
+    function removeNullinArray(array)
+    {
+        if(!isArray(array))
+        {
+            return array;
+        }
+        else
+        {
+            let resultarray=[];
+            for(let _loopvar=0;_loopvar < array.length;_loopvar++)
+            {
+                if(!isNull(array[_loopvar]))
+                {
+                    resultarray.push(array[_loopvar]);
+                }
+            }
+            return resultarray;
+        }
+    }
+    function replaceNulltoEmptyStringinArray(array)
+    {
+        if(!isArray(array))
+        {
+            return array;
+        }
+        else
+        {
+            let resultarray=[];
+            for(let _loopvar=0;_loopvar < array.length;_loopvar++)
+            {
+                if(!isNull(array[_loopvar]))
+                {
+                    resultarray.push(array[_loopvar]);
+                }
+                else
+                {
+                    resultarray.push("");
+                }
+            }
+            return resultarray;
+        }
+    }
+    function removeNullandEmptyStringinArray(array)
+    {
+        if(!isArray(array))
+        {
+            return array;
+        }
+        else
+        {
+            let resultarray=[];
+            for(let _loopvar=0;_loopvar < array.length;_loopvar++)
+            {
+                if((!isNull(array[_loopvar])) || (!isEmpty(array[_loopvar])))
+                {
+                    resultarray.push(array[_loopvar]);
+                }
+            }
+            return resultarray;
+        }
+    }
+    function sortarray(array,isdes=false)
+    {
+        if(!isArray(array))
+        {
+            return array;
+        }
+        else
+        {
+            return array.sort(function(a,b) {
+                if(isdes)
+                    return b[0]-a[0];
+                else
+                    return a[0]-b[0];
+            });
+        }
+    }
+    function ifKeyExists(object,key)
+    {
+        if (object.hasOwnProperty(key)) {
+            return true;
+        }
+        return false;
+    }
 
 
 module.exports = {
   isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweennew ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptresponse,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString,
-  isEmail,isEmpty,isEmptyArray,isValidHttpUrl,trimtext,isNull,getMD5,getCurrentTimeinMilliSeconds,replaceAll
+  isEmail,isEmpty,isEmptyArray,isValidHttpUrl,trimtext,isNull,getMD5,getCurrentTimeinMilliSeconds,replaceAll,
+  trim,toNumber,toBoolean,isNumeric,isInteger,endsWith,startsWith,uniquefromarray,randomBoolean,isObjectEmpty,reversestring,randomHexColor,numberofoccurrences,numbertoStringWithComma,removeEmptyStringinArray,replaceEmptyStringtoNullinArray,removeNullinArray,replaceNulltoEmptyStringinArray,removeNullandEmptyStringinArray,sortarray,ifKeyExists
 }

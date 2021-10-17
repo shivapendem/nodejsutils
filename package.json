@@ -1,6 +1,6 @@
 {
   "name": "nodejs-coreutils",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "nodejsutils for node usage",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,9 @@
     "nodejsutils",
     "node",
     "utils",
-    "utils"
+    "basic utils",
+    "basic utils",
+    "shivapendem"
   ],
   "author": "shivapendem",
   "license": "ISC",

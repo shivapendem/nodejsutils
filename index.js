@@ -1,3 +1,9 @@
+    var md5 = require('md5');
+    var crypto = require('crypto');
+    var speakeasy = require("speakeasy");
+    const stripHtml = require("string-strip-html");
+
+
     function isMD5(inputString) {
        return (/[a-fA-F0-9]{32}/).test(inputString);
     };
@@ -99,9 +105,9 @@
         return gen_hash;
     };
     function randomIntFromInterval (min,max) {
-        return getvaluebetweennew(min,max,0);
+        return getvaluebetweenwithdecimals(min,max,0);
     };
-    function getvaluebetweennew (min,max,decimal) {
+    function getvaluebetweenwithdecimals (min,max,decimal) {
         var precision=1;
         for(var i=0;i<decimal;i++)
             precision=precision*10;
@@ -110,7 +116,7 @@
     function urlencodestring(query) {
         return encodeURIComponent(query).replace(/'/g,"%27").replace(/"/g,"%22")
     };
-    function generateGauthkey (userinfo) {
+    function generateGauthkey() {
         var secret = speakeasy.generateSecret({length: 20});
         return secret.base32;
     };
@@ -124,16 +130,17 @@
     };
     function validatemobileotp (key,password,delay) {
         var tokenValidates = speakeasy.totp.verify({secret: key,encoding: 'base32',token: password,window: delay});
-        var delta=-1;
-        if(tokenValidates==true)
-          delta=1;
-        return {delta:delta};
+        return tokenValidates;
     };
     function getHash(string,key){
         const hash = crypto.createHmac('sha512', key).update(string).digest('hex');
         return hash  ;
     };
     function MystripFunction(data)
+    {
+      stripHTMLTags(data);     
+    }
+    function stripHTMLTags(data)
     {
       var type = typeof data;
       //console.log(type);
@@ -157,21 +164,21 @@
       {
         for(var _loopvar=0;_loopvar<data.length;_loopvar++)
         {
-          data[_loopvar]=MystripFunction(data[_loopvar]);
+          data[_loopvar]=stripHTMLTags(data[_loopvar]);
         }
         return data;
       }
       else if(type == 'object')
       {
         for(var key in data) {
-            var value = MystripFunction(data[key]);
+            var value = stripHTMLTags(data[key]);
             data[key]=value;
         }
         return data;
       }
       else
       {
-        console.error("MystripFunction "+type);
+        console.error("stripHTMLTags "+type);
         console.error(data);
         return data;
       }     
@@ -212,12 +219,12 @@
         }
         return true;
     }
-    function encryptresponse(str_golb) {
+    function encryptobject(str_golb) {
         if(isJson(str_golb))
         {
             try
             {
-    	       var str=JSON.stringify(JSON.parse(str_golb));
+               var str=JSON.stringify(JSON.parse(str_golb));
                str_golb=str;
             }
             catch(e)
@@ -289,7 +296,8 @@
 
     function isEmpty(string)
     {
-        if (string.trim() === "") return true;
+        if(isNull(string)) return true;
+        else if (string.trim() === "") return true;
         else return false;
     };
 
@@ -320,7 +328,7 @@
 
     function isNull(data)
     {
-        if( (variable === null) || (typeof data === 'undefined') )
+        if( (data === null) || (typeof data === 'undefined') )
         { 
             return true;
         }
@@ -329,9 +337,9 @@
     function getMD5(data)
     {
         if(isJson(data))
-            return Md5.hashStr(JSON.stringify(string));
+            return md5(JSON.stringify(data));
         else
-            return Md5.hashStr(string);
+            return md5(data);
     }
     function getCurrentTimeinMilliSeconds()
     {
@@ -354,11 +362,11 @@
     };
 
     function toBoolean(value) {
-        return value.toString().toLowerCase() == "true" && value != "0";
+        return value.toString().toLowerCase().trim() == "true" && value != "0";
     };
 
-    function isNumeric(precision) {
-        return new RegExp("^-?((\\d{1," + (precision ? precision.length - precision.scale : "") + "}((\\.\\d{0," + (precision ? precision.scale : "") + "})?)))$").test(this);
+    function isNumeric(number) {
+        return !isNaN(number);
     };
 
     function isInteger(value) {
@@ -367,16 +375,16 @@
 
     function endsWith(value, ends, ignoreCase) {
         if (ignoreCase) {
-            return value.toLowerCase().charAt(value.length - str.length) == str.toLowerCase();
+            return value.toLowerCase().charAt(value.length - ends.length) == ends.toLowerCase();
         }
         return value.charAt(value.length - str.length) == str;  
     };
 
     function startsWith(value, stats, ignoreCase) {
         if (ignoreCase) {
-            return value.toLowerCase().charAt(0) == str.toLowerCase();
+            return value.toLowerCase().charAt(0) == stats.toLowerCase();
         }
-        return value.charAt(0) == str;
+        return value.charAt(0) == stats;
     };
 
     function uniquefromarray(origArr) {
@@ -411,21 +419,9 @@
     function randomHexColor()
     {
         let n= (Math.random() *0xFFFFFF*1000000).toString(16);
-        return "#"+n;
+        return "#"+n.slice(0,6);
     }
-    function numberofoccurrences(array)
-    {
-        if(!isArray(array))
-        {
-            return [];
-        }
-        else
-        {
-            array.reduce(function (acc, curr) {
-              return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
-            }, {});
-        }
-    }
+    
     function numbertoStringWithComma(number)
     {
         if(!isNumeric(number))
@@ -437,11 +433,11 @@
             let str=String(number);
             let s='';
             let count=0;
-            for(let _loopvar=str.length-1;_loopvar>0;_loopvar--)
+            for(let _loopvar=str.length-1;_loopvar>=0;_loopvar--)
             {
                 s=str[_loopvar]+s;
                 count++;
-                if((count%3==0) && (i!=0) )
+                if((count%3==0) && (_loopvar!=0) )
                 {
                     s=','+s;
                 }
@@ -451,7 +447,7 @@
     }
     function removeEmptyStringinArray(array)
     {
-        if(!isArray(array))
+        if(!Array.isArray(array))
         {
             return array;
         }
@@ -470,7 +466,7 @@
     }
     function replaceEmptyStringtoNullinArray(array)
     {
-        if(!isArray(array))
+        if(!Array.isArray(array))
         {
             return array;
         }
@@ -493,7 +489,7 @@
     }
     function removeNullinArray(array)
     {
-        if(!isArray(array))
+        if(!Array.isArray(array))
         {
             return array;
         }
@@ -512,7 +508,7 @@
     }
     function replaceNulltoEmptyStringinArray(array)
     {
-        if(!isArray(array))
+        if(!Array.isArray(array))
         {
             return array;
         }
@@ -535,7 +531,7 @@
     }
     function removeNullandEmptyStringinArray(array)
     {
-        if(!isArray(array))
+        if(!Array.isArray(array))
         {
             return array;
         }
@@ -544,7 +540,7 @@
             let resultarray=[];
             for(let _loopvar=0;_loopvar < array.length;_loopvar++)
             {
-                if((!isNull(array[_loopvar])) || (!isEmpty(array[_loopvar])))
+                if((!isNull(array[_loopvar])) && (!isEmpty(array[_loopvar])))
                 {
                     resultarray.push(array[_loopvar]);
                 }
@@ -554,18 +550,19 @@
     }
     function sortarray(array,isdes=false)
     {
-        if(!isArray(array))
+        if(!Array.isArray(array))
         {
             return array;
         }
         else
         {
-            return array.sort(function(a,b) {
+            array= array.sort(function(a,b) {
                 if(isdes)
-                    return b[0]-a[0];
+                    return b-a;
                 else
-                    return a[0]-b[0];
+                    return a-b;
             });
+            return array;
         }
     }
     function ifKeyExists(object,key)
@@ -578,7 +575,7 @@
 
 
 module.exports = {
-  isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweennew ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptresponse,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString,
-  isEmail,isEmpty,isEmptyArray,isValidHttpUrl,trimtext,isNull,getMD5,getCurrentTimeinMilliSeconds,replaceAll,
-  trim,toNumber,toBoolean,isNumeric,isInteger,endsWith,startsWith,uniquefromarray,randomBoolean,isObjectEmpty,reversestring,randomHexColor,numberofoccurrences,numbertoStringWithComma,removeEmptyStringinArray,replaceEmptyStringtoNullinArray,removeNullinArray,replaceNulltoEmptyStringinArray,removeNullandEmptyStringinArray,sortarray,ifKeyExists
+  isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweenwithdecimals ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptobject,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString,
+  isEmail,isEmpty,isEmptyArray,isValidHttpUrl,trimtext,isNull,getMD5,getCurrentTimeinMilliSeconds,replaceAll,stripHTMLTags,
+  trim,toNumber,toBoolean,isNumeric,isInteger,endsWith,startsWith,uniquefromarray,randomBoolean,isObjectEmpty,reversestring,randomHexColor,numbertoStringWithComma,removeEmptyStringinArray,replaceEmptyStringtoNullinArray,removeNullinArray,replaceNulltoEmptyStringinArray,removeNullandEmptyStringinArray,sortarray,ifKeyExists
 }

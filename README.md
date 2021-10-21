@@ -144,3 +144,7 @@ Let's see about js code:
     console.log(jsutil.sortarray([5,5,6,2,6,8,9,2],false));
     //[  2, 2, 5, 5, 6, 6, 8, 9 ]
 
+    ```
+## Support
+    
+    Happy to add more, and need any updates, do get in touch on my telegram over [@chigovara](#https://t.me/chigovera)

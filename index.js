@@ -579,10 +579,46 @@
         }
         return string.replace(/[^\x00-\x7F]/g,"");;
     }
+    function timeDifference(timestamp) 
+    {
+      const msPerMinute = 60 * 1000;
+      const msPerHour = msPerMinute * 60;
+      const msPerDay = msPerHour * 24;
+      const msPerMonth = msPerDay * 30;
+      const msPerYear = msPerDay * 365;
+      const current = new Date();
+      const previous = timestamp * 1000;
+
+      var elapsed = current - previous;
+
+      if (elapsed < msPerMinute) {
+        return Math.round(elapsed / 1000) + " seconds ago";
+      } else if (elapsed < msPerHour) {
+        return Math.round(elapsed / msPerMinute) + " minutes ago";
+      } else if (elapsed < msPerDay) {
+        return Math.round(elapsed / msPerHour) + " hours ago";
+      } else if (elapsed < msPerMonth) {
+        return "approximately " + Math.round(elapsed / msPerDay) + " days ago";
+      } else if (elapsed < msPerYear) {
+        return "approximately " + Math.round(elapsed / msPerMonth) + " months ago";
+      } else {
+        return "approximately " + Math.round(elapsed / msPerYear) + " years ago";
+      }
+    };
+    function numberWithCommas(number, tofixed) 
+    {
+        if (tofixed)
+            number = Number(number).toFixed(tofixed);
+        const str = number.toString().split('.');
+        str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+
+        return str.join('.');
+    }
 
 
 module.exports = {
   isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweenwithdecimals ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptobject,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString,
   isEmail,isEmpty,isEmptyArray,isValidHttpUrl,trimtext,isNull,getMD5,getCurrentTimeinMilliSeconds,replaceAll,stripHTMLTags,trim,toNumber,toBoolean,isNumeric,isInteger,endsWith,startsWith,uniquefromarray,randomBoolean,isObjectEmpty,reversestring,randomHexColor,numbertoStringWithComma,removeEmptyStringinArray,replaceEmptyStringtoNullinArray,removeNullinArray,replaceNulltoEmptyStringinArray,removeNullandEmptyStringinArray,sortarray,ifKeyExists,
-  removeUnicodeCharacters
+  removeUnicodeCharacters,
+  timeDifference,numberWithCommas
 }

@@ -7,8 +7,12 @@
     
     ```
 
-
 ## How to use
+# Version V 0.1.2:
+    Added new methods for validation 
+    isNil,isFunction,isArray,isString,isBoolean,isUndefined,isNumber,isEmpty,isObject,isRegExp
+
+
 Let's see about js code:
 ```js
     let jsutil = require('nodejs-coreutils');
@@ -143,6 +147,12 @@ Let's see about js code:
 
     console.log(jsutil.sortarray([5,5,6,2,6,8,9,2],false));
     //[  2, 2, 5, 5, 6, 6, 8, 9 ]
+
+    console.log(jsutil.timeDifference(new Date().getTime()/1000 - 10);
+    //10 Seconds ago
+
+    console.log(jsutil.numberWithCommas(10000000,5);
+    //10,000,000.00000
 
     ```
 ## Support

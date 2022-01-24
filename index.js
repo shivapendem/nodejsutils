@@ -614,11 +614,51 @@
 
         return str.join('.');
     }
+///////
+
+function isNil(value) {
+    return value === null || isUndefined(value);
+}
+
+function isFunction(value) {
+    return typeof value === "function";
+}
+
+function isArray(value) {
+    return Array.isArray(value);
+}
+
+function isString(value) {
+    return Object.prototype.toString.call(value) === "[object String]";
+}
+
+function isBoolean(value) {
+    return typeof value === "boolean" || value instanceof Boolean;
+}
+
+function isUndefined(value) {
+    return value === undefined;
+}
+
+
+function isNumber(value) {
+    return typeof value === "number" || value instanceof Number;
+}
+
+
+function isObject(value) {
+    return typeof value === "object" || isFunction(value);
+}
+
+function isRegExp(value) {
+    return Object.prototype.toString.call(value) === "[object RegExp]";
+}
 
 
 module.exports = {
   isMD5,toTitleCase,maskcode,searcharray,validateEmail,validatePassword,getdomain ,containsspecialcharacters,generatehash ,randomIntFromInterval ,getvaluebetweenwithdecimals ,urlencodestring ,generateGauthkey ,getmobileauthImage ,getTexttoImage ,validatemobileotp ,getHash,MystripFunction,strip_tags,customencrypt,customdecrypt,isJson,encryptobject,getnumberfixeddecimal,removeexponentials,truncateToDecimals,countDecimals,generateRandomString,
   isEmail,isEmpty,isEmptyArray,isValidHttpUrl,trimtext,isNull,getMD5,getCurrentTimeinMilliSeconds,replaceAll,stripHTMLTags,trim,toNumber,toBoolean,isNumeric,isInteger,endsWith,startsWith,uniquefromarray,randomBoolean,isObjectEmpty,reversestring,randomHexColor,numbertoStringWithComma,removeEmptyStringinArray,replaceEmptyStringtoNullinArray,removeNullinArray,replaceNulltoEmptyStringinArray,removeNullandEmptyStringinArray,sortarray,ifKeyExists,
   removeUnicodeCharacters,
-  timeDifference,numberWithCommas
+  timeDifference,numberWithCommas,
+  isNil,isFunction,isArray,isString,isBoolean,isUndefined,isNumber,isEmpty,isObject,isRegExp
 }

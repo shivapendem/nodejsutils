@@ -156,5 +156,5 @@ Let's see about js code:
 
     ```
 ## Support
-    
-    Happy to add more, and need any updates, do get in touch on my telegram over [@chigovara](#https://t.me/chigovera)
+
+Happy to add more, and need any updates, do get in touch on my telegram over [@chigovera](#https://t.me/chigovera)

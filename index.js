@@ -373,6 +373,10 @@
         return /^[0-9]{1,}$/.test(value);
     }
 
+    function isIntegerNew(value) {
+        return isNumeric(value) && Number.isInteger(Number(value));
+    }
+
     function endsWith(value, ends, ignoreCase) {
         if (ignoreCase) {
             return value.toLowerCase().charAt(value.length - ends.length) == ends.toLowerCase();

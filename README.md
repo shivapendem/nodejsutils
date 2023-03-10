@@ -7,12 +7,17 @@
     
     ```
 
-## How to use
+## Whatsnew
+# Version V 0.2.0:
+    Updated isEmpty,isNil functions
+
+
 # Version V 0.1.2:
     Added new methods for validation 
     isNil,isFunction,isArray,isString,isBoolean,isUndefined,isNumber,isEmpty,isObject,isRegExp
 
 
+## How to use
 Let's see about js code:
 ```js
     let jsutil = require('nodejs-coreutils');

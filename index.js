@@ -70,7 +70,6 @@ function validatePassword(a) {
 			return true;
 	}
 };
-
 function getdomain(a) {
 	var domain = a.replace(/.*@/, "");
 	return domain;
@@ -159,7 +158,6 @@ function stripHTMLTags(data) {
 		return data;
 	}
 }
-
 function strip_tags(str) {
 	if (isNull(str))
 		return str;
@@ -184,14 +182,18 @@ function customdecrypt(str, algorithm = 'aes256', key = 'shivapendem') {
 		return "";
 	}
 };
-function isJson(str) {
-	try {
-		JSON.parse(str);
-	} catch (e) {
+function isJson(item) {
+		item = typeof item !== "string" ? JSON.stringify(item) : item;
+		try {
+			item = JSON.parse(item);
+		} catch (e) {
+			return false;
+		}
+		if (typeof item === "object" && item !== null) {
+			return true;
+		}
 		return false;
-	}
-	return true;
-}
+	};
 function encryptobject(str_golb) {
 	if (isJson(str_golb)) {
 		try {
@@ -206,7 +208,6 @@ function encryptobject(str_golb) {
 	let unescapeStr = urlencodestring(str_golb);
 	return crypto.createHmac('sha512', "").update(unescapeStr).digest('hex').toString();
 };
-
 function getnumberfixeddecimal(number, decimals, nodots = false) {
 	if (isNaN(Number(number))) {
 		return number;
@@ -222,7 +223,6 @@ function getnumberfixeddecimal(number, decimals, nodots = false) {
 		return (number + "").substring(0, 4) + "..." + (number + "").substring((number + "").length - 3);
 	}
 };
-
 function removeexponentials(n) {
 	var sign = +n < 0 ? "-" : "",
 		toStr = n.toString();
@@ -262,8 +262,6 @@ function generateRandomString(length, characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZab
 	}
 	return result;
 };
-
-
 function isEmpty(string) {
     if (isNull(string)) return true;
     else if ((typeof string) == "object") { return Object.keys(string).length == 0 ? true : false; }
@@ -273,12 +271,10 @@ function isEmpty(string) {
     else if (string.trim() === "") return true;
     else return false;
 };
-
 function isEmptyArray(array) {
 	if (array.length === 0) return true;
 	return false;
 };
-
 function isValidHttpUrl(string) {
 	let url;
 	try {
@@ -296,7 +292,6 @@ function trimtext(text, length = 12) {
 	else
 		return text;
 }
-
 function isNull(data) {
 	if ((data === null) || (typeof data === 'undefined')) {
 		return true;
@@ -322,7 +317,6 @@ function replaceAll(textstring, from, to) {
 function trim(value) {
 	return value.toString().replace(/^\s+|\s+$/g, '');
 }
-
 function toNumber(value) {
 	return Number(value);
 };
@@ -330,39 +324,32 @@ function toNumber(value) {
 function toBoolean(value) {
 	return value.toString().toLowerCase().trim() == "true" && value != "0";
 };
-
 function isNumeric(number) {
 	return !isNaN(number);
 };
-
 function isInteger(value) {
 	return /^[0-9]{1,}$/.test(value);
 }
-
 function isIntegerNew(value) {
 	return isNumeric(value) && Number.isInteger(Number(value));
 }
-
 function endsWith(value, ends, ignoreCase) {
 	if (ignoreCase) {
 		return value.toLowerCase().charAt(value.length - ends.length) == ends.toLowerCase();
 	}
 	return value.charAt(value.length - str.length) == str;
 };
-
 function startsWith(value, stats, ignoreCase) {
 	if (ignoreCase) {
 		return value.toLowerCase().charAt(0) == stats.toLowerCase();
 	}
 	return value.charAt(0) == stats;
 };
-
 function uniquefromarray(origArr) {
 	var newArr = [],
 		origLen = origArr.length,
 		found,
 		x, y;
-
 	for (x = 0; x < origLen; x++) {
 		found = undefined;
 		for (y = 0; y < newArr.length; y++) {
@@ -388,7 +375,6 @@ function randomHexColor() {
 	let n = (Math.random() * 0xFFFFFF * 1000000).toString(16);
 	return "#" + n.slice(0, 6);
 }
-
 function numbertoStringWithComma(number) {
     if(isNull(number)) return number;
     else if(isEmpty(number)) return number;
@@ -549,46 +535,237 @@ function numberWithCommas(number, tofixed) {
 function isNil(value) {
 	return isNull(value);
 }
-
 function isFunction(value) {
 	return typeof value === "function";
 }
-
 function isArray(value) {
 	return Array.isArray(value);
 }
-
 function isString(value) {
 	return Object.prototype.toString.call(value) === "[object String]";
 }
-
 function isBoolean(value) {
 	return typeof value === "boolean" || value instanceof Boolean;
 }
-
 function isUndefined(value) {
 	return value === undefined;
 }
-
-
 function isNumber(value) {
 	return typeof value === "number" || value instanceof Number;
 }
-
-
 function isObject(value) {
 	return typeof value === "object" || isFunction(value);
 }
-
 function isRegExp(value) {
 	return Object.prototype.toString.call(value) === "[object RegExp]";
 }
 
+/////
+
+
+function filterJsonWebToken (webtoken) {
+		if (isNull(webtoken)) return webtoken;
+		if (webtoken == "") return "";
+		var type = typeof webtoken;
+		if (type == 'string') {
+			return webtoken.replace(/[^a-zA-Z0-9-./_]/g, "");
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+function getStackTrace() {
+		const error = new Error();
+		const stack = error.stack.split("\n").slice(2, 20)
+			.filter((obj) => {
+				return obj.indexOf("node_modules") < 0;
+			})
+			.filter((obj) => {
+				return obj.indexOf("internal/") < 0;
+			})
+			.map((line) => line.replace(/\s+at\s+/, "")).slice(1).join("\n");
+		return stack;
+	};
+
+function getdeviceinfofromRequest(req) {
+		let _str = "";
+		if(isEmptyOrNull(req)) return null;
+		if(isEmptyOrNull(req.rawHeaders)) return null;
+		if (req.rawHeaders.indexOf("user-agent") == -1) return null;
+		let _info = req.rawHeaders[req.rawHeaders.indexOf("user-agent") + 1];
+		if (_info.indexOf("(") == -1 || _info.indexOf(")") == -1) return "";
+		let _dev = _info.substring(_info.indexOf("("), _info.indexOf(")"));
+		let _as = _dev.split(";");
+		if (_as[0].indexOf("Windows") >= 0) {
+			//windows
+			if (_info.match(/chrome|chromium|crios/i)) {
+				_str = "Windows chrome";
+			} else if (_info.match(/firefox|fxios/i)) {
+				_str = "Windows firefox";
+			} else if (_info.match(/safari/i)) {
+				_str = "Windows safari";
+			} else if (_info.match(/opr\//i)) {
+				_str = "Windows opera";
+			} else if (_info.match(/edg/i)) {
+				_str = "Windows edge";
+			} else {
+				_str = "Windows Unknown Browser";
+			}
+		} else if (_as[0].indexOf("Macintosh") >= 0) {
+			if (_info.match(/chrome|Chrome|chromium|crios/i)) {
+				_str = "Macintosh chrome";
+			} else if (_info.match(/firefox|fxios|Firefox/i)) {
+				_str = "Macintosh firefox";
+			} else if (_info.match(/safari/i)) {
+				_str = "Macintosh safari";
+			} else if (_info.match(/opr\//i)) {
+				_str = "Macintosh opera";
+			} else if (_info.match(/edg/i)) {
+				_str = "Macintosh edge";
+			} else {
+				_str = "Macintosh Unknown Browser";
+			}
+		} else if (_info.indexOf("Android") >= 0) {
+			if (_as.length < 2) {
+				//console.error(_info);
+				//console.error(_as.length);
+				return "";
+			} else if (_as.length == 2) {
+				if (_info.match(/chrome|Chrome|chromium|crios/i)) {
+					_str = "Android chrome";
+				} else if (_info.match(/firefox|fxios|Firefox/i)) {
+					_str = "Android firefox";
+				} else if (_info.match(/safari/i)) {
+					_str = "Android safari";
+				} else if (_info.match(/opr\//i)) {
+					_str = "Android opera";
+				} else if (_info.match(/edg/i)) {
+					_str = "Android edge";
+				} else {
+					_str = "Android Unknown Browser";
+				}
+				return _str;
+			} else {
+				_str = _as[2];
+				if (_str.indexOf("Build") != -1)
+					_str = _str.substring(0, _str.indexOf("Build")).trim();
+				else _str = _str.trim();
+			}
+		} else if (_as[0].indexOf("Linux") >= 0 || _as[1].indexOf("Linux") >= 0) {
+			//Linux system
+			if (_info.match(/chrome|Chrome|chromium|crios/i)) {
+				_str = "Linux chrome";
+			} else if (_info.match(/firefox|fxios|Firefox/i)) {
+				_str = "Linux firefox";
+			} else if (_info.match(/safari/i)) {
+				_str = "Linux safari";
+			} else if (_info.match(/opr\//i)) {
+				_str = "Linux opera";
+			} else if (_info.match(/edg/i)) {
+				_str = "Linux edge";
+			} else {
+				_str = "Linux Unknown Browser";
+			}
+		} else if (_as[0].indexOf("iPhone") >= 0) {
+			//iphone
+			_str = "iPhone";
+		} else {
+			if (_as.length <= 2) {
+				console.error(_info);
+				return "";
+			}
+			_str = _as[2];
+			if (_str.indexOf("Build") != -1)
+				_str = _str.substring(0, _str.indexOf("Build")).trim();
+			else _str = _str.trim();
+		}
+		//console.error(" samplee ",_str);
+		return _str;
+	};
+
+function isUrl (_url) 
+	{
+		var type = typeof _url;
+		if (type == 'string') {
+			var protocolAndDomainRE = /^(?:\w+:)?\/\/(\S+)$/;
+			var localhostDomainRE = /^localhost[\:?\d](?:[^\:?\d]\S)?$/
+			var nonLocalhostDomainRE = /^[^\s\.]+\.\S{2,}$/;
+			if (typeof _url !== 'string') {
+				return false;
+			}
+			var match = _url.match(protocolAndDomainRE);
+			if (!match) {
+				return false;
+			}
+			var everythingAfterProtocol = match[1];
+			if (!everythingAfterProtocol) {
+				return false;
+			}
+			if (localhostDomainRE.test(everythingAfterProtocol) ||
+				nonLocalhostDomainRE.test(everythingAfterProtocol)) {
+				return true;
+			}
+			return false;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+
+
+	function removesymbols (_string) {
+		if (isNull(_string)) return _string;
+		var type = typeof _string;
+		if (type == 'string') {
+			return _string.replace(/[^\x00-\xFF]/g, "").replace(/\W/g, "");
+		}
+		else
+		{
+			return null;
+		}
+	};
+	function removenonAscii (_string) {
+		if (isNull(_string)) return _string;
+		var type = typeof _string;
+		if (type == 'string') {
+			return _string.replace(/[^\x00-\x7F]/g, "");
+		}
+		else return _string;
+	};
+
+
+ 	function validateIP(ipaddreess) {
+		var expression = /((^\s*((([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]))\s*$)|(^\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?\s*$))/;
+		if (expression.test(ipaddreess)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	};
+	function isEmptyOrNull(data) {
+		return isEmpty(data) ? isEmpty(data) : isNull(data);
+	};
+	function validateMultipleIp(ipaddreessString,delimiter=";") {
+		if (isNull(ipaddreessString)) return false;
+		if (isEmpty(ipaddreessString)) return true;
+		var _iparray = ipaddreessString.split(delimiter);
+		var _status = null;
+		_iparray.forEach(ipaddress => {
+			_status = (_status == null) ? validateIP(ipaddress) : (_status && validateIP(ipaddress));
+		});
+		return _status;
+	}
 
 module.exports = {
 	isMD5, toTitleCase, maskcode, searcharray, validateEmail, validatePassword, getdomain, containsspecialcharacters, generatehash, randomIntFromInterval, getvaluebetweenwithdecimals, urlencodestring, generateGauthkey, getmobileauthImage, getTexttoImage, validatemobileotp, getHash, MystripFunction, strip_tags, customencrypt, customdecrypt, isJson, encryptobject, getnumberfixeddecimal, removeexponentials, truncateToDecimals, countDecimals, generateRandomString,
 	isEmail, isEmpty, isEmptyArray, isValidHttpUrl, trimtext, isNull, getMD5, getCurrentTimeinMilliSeconds, replaceAll, stripHTMLTags, trim, toNumber, toBoolean, isNumeric, isInteger, endsWith, startsWith, uniquefromarray, randomBoolean, isObjectEmpty, reversestring, randomHexColor, numbertoStringWithComma, removeEmptyStringinArray, replaceEmptyStringtoNullinArray, removeNullinArray, replaceNulltoEmptyStringinArray, removeNullandEmptyStringinArray, sortarray, ifKeyExists,
 	removeUnicodeCharacters,
 	timeDifference, numberWithCommas,
-	isNil, isFunction, isArray, isString, isBoolean, isUndefined, isNumber, isEmpty, isObject, isRegExp
+	isNil, isFunction, isArray, isString, isBoolean, isUndefined, isNumber, isEmpty, isObject, isRegExp,
+	filterJsonWebToken,getStackTrace,getdeviceinfofromRequest,isUrl,removesymbols, removenonAscii ,validateIP,validateMultipleIp,isEmptyOrNull
 }

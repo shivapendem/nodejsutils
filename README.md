@@ -1,23 +1,26 @@
-## Description
+# Description
     npm package for simple addons to node library.
-## Installation
+# Installation
     `npm i nodejs-coreutils --save`
     ```
     import {nodejs-coreutils} from 'nodejs-coreutils';
     
     ```
 
-## Whatsnew
-# Version V 0.2.0:
+# Whatsnew
+## Version V 0.2.1:
+    Updated isJson functions, added filterJsonWebToken,getStackTrace,getdeviceinfofromRequest,getdeviceinfofromRequest,isUrl,cleartext,removenonAscii,validateIP,validateMultipleIp,isEmptyOrNull
+
+## Version V 0.2.0:
     Updated isEmpty,isNil functions
 
 
-# Version V 0.1.2:
+## Version V 0.1.2:
     Added new methods for validation 
     isNil,isFunction,isArray,isString,isBoolean,isUndefined,isNumber,isEmpty,isObject,isRegExp
 
 
-## How to use
+# How to use
 Let's see about js code:
 ```js
     let jsutil = require('nodejs-coreutils');
@@ -153,13 +156,23 @@ Let's see about js code:
     console.log(jsutil.sortarray([5,5,6,2,6,8,9,2],false));
     //[  2, 2, 5, 5, 6, 6, 8, 9 ]
 
-    console.log(jsutil.timeDifference(new Date().getTime()/1000 - 10);
+    console.log(jsutil.timeDifference(new Date().getTime()/1000 - 10));
     //10 Seconds ago
 
-    console.log(jsutil.numberWithCommas(10000000,5);
+    console.log(jsutil.numberWithCommas(10000000,5));
     //10,000,000.00000
 
+    console.log(jsutil.filterJsonWebToken("asjdakfwrwfsdfjslkdfjsieurwerjkwenrwerkjwehr"));
+    console.log(jsutil.getStackTrace());
+    console.log(jsutil.getdeviceinfofromRequest(null));
+    console.log(jsutil.isUrl("https://www.google.com"));
+    console.log(jsutil.removesymbols("https://www.google.com24234"));
+    console.log(jsutil.removenonAscii("https://www.google.com24234"));
+    console.log(jsutil.validateIP("127.0.0.1"));
+    console.log(jsutil.validateIP("1111:2222:3333:4444:5555:6666::"));
+    console.log(jsutil.validateMultipleIp("1111:2222:3333:4444:5555:6666::;127.0.0.1",";"));
+
     ```
-## Support
+# Support
 
 Happy to add more, and need any updates, do get in touch on my telegram over [@chigovera](#https://t.me/chigovera)

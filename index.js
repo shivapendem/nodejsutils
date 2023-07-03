@@ -22,6 +22,16 @@ function maskcode(data, limiter) {
 	var res = _email.join("");
 	return res;
 };
+function maskcodeFixedLength (data, limiter) {
+    if(isEmptyOrNull(data) || isEmptyOrNull(limiter) ) return "";
+    let index=0;
+    if(data.length <= 1) return data;
+    if(data.length <= 4) index=1;
+    else if(data.length <= 7) index=2;
+    else if(data.length <= 10) index=3;
+    else index=4;
+    return data.substr(0,index)+ limiter.repeat(Math.min(Math.abs(data.length-index*2),5)) +data.substr(-1*index);
+};
 function searcharray(master, position, value) {
 	if ((isNull(master)) || (isNull(position)) || (isNull(value)))
 		return false;
@@ -767,5 +777,5 @@ module.exports = {
 	removeUnicodeCharacters,
 	timeDifference, numberWithCommas,
 	isNil, isFunction, isArray, isString, isBoolean, isUndefined, isNumber, isEmpty, isObject, isRegExp,
-	filterJsonWebToken,getStackTrace,getdeviceinfofromRequest,isUrl,removesymbols, removenonAscii ,validateIP,validateMultipleIp,isEmptyOrNull
+	filterJsonWebToken,getStackTrace,getdeviceinfofromRequest,isUrl,removesymbols, removenonAscii ,validateIP,validateMultipleIp,isEmptyOrNull,maskcodeFixedLength
 }

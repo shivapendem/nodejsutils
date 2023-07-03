@@ -2,12 +2,13 @@
     npm package for simple addons to node library.
 # Installation
     `npm i nodejs-coreutils --save`
-    ```
-    import {nodejs-coreutils} from 'nodejs-coreutils';
-    
-    ```
+        
+    let jsutil = require('nodejs-coreutils');
 
 # Whatsnew
+## Version V 0.2.2:
+    added maskcodeFixedLength to mask and optimize data length
+
 ## Version V 0.2.1:
     Updated isJson functions, added filterJsonWebToken,getStackTrace,getdeviceinfofromRequest,getdeviceinfofromRequest,isUrl,cleartext,removenonAscii,validateIP,validateMultipleIp,isEmptyOrNull
 
@@ -24,6 +25,10 @@
 Let's see about js code:
 ```js
     let jsutil = require('nodejs-coreutils');
+    
+    let _maskcode=jsutil.maskcodeFixedLength("shivapendemshivapendemshivapendemshivapendemshivapendem","x");  
+    console.log(_maskcode);
+        //shivxxxxxndem
     
     let _md5=jsutil.getMD5("shivapendem");  
     console.log(_md5);

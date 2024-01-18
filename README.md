@@ -6,6 +6,12 @@
     let jsutil = require('nodejs-coreutils');
 
 # Whatsnew
+## Version V 0.2.5:
+    added javascript level sleep function, added validations for faster response.
+
+## Version V 0.2.3:
+    added sortjson to sort json of any level
+
 ## Version V 0.2.2:
     added maskcodeFixedLength to mask and optimize data length
 
@@ -180,4 +186,4 @@ Let's see about js code:
     ```
 # Support
 
-Happy to add more, and need any updates, do get in touch on my telegram over [@chigovera](#https://t.me/chigovera)
+Happy to add more, and need any updates, do get in touch on my telegram over [@chigovera](https://t.me/chigovera)
